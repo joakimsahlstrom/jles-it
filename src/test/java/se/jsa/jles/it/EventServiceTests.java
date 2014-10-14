@@ -9,7 +9,7 @@ import org.junit.Test;
 import se.jsa.jles.EventQuery;
 import se.jsa.jles.EventStore;
 import se.jsa.jles.EventStoreConfigurer;
-import se.jsa.jles.Match;
+import se.jsa.jles.Matcher;
 import se.jsa.jles.SqlMatch;
 import se.jsa.jles.eh.EventFeedReader;
 import se.jsa.jles.eh.EventService;
@@ -19,10 +19,10 @@ public class EventServiceTests {
 
 	static class MyEventFeedReader implements EventFeedReader {
 		private final LinkedList<Object> eventQueue = new LinkedList<Object>();
-		final Match match;
+		final Matcher match;
 		final Class<?> eventType;
 
-		public MyEventFeedReader(Class<?> eventType, Match match) {
+		public MyEventFeedReader(Class<?> eventType, Matcher match) {
 			this.eventType = eventType;
 			this.match = match;
 		}
