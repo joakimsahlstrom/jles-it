@@ -6,7 +6,7 @@ import java.util.LinkedList;
 
 import org.junit.Test;
 
-import se.jsa.jles.EventQuery2;
+import se.jsa.jles.EventQuery;
 import se.jsa.jles.EventStore;
 import se.jsa.jles.EventStoreConfigurer;
 import se.jsa.jles.eh.EventFeedReader;
@@ -50,7 +50,7 @@ public class EventServiceTests {
 
 		final AddShoppingListItemEvent expectedEvent = createEvent(1);
 		eventStore.write(expectedEvent);
-		eventService.register(subscription, EventQuery2.select(AddShoppingListItemEvent.class));
+		eventService.register(subscription, EventQuery.select(AddShoppingListItemEvent.class));
 
 		assertEqualsEventually(expectedEvent, getNextReceivedEvent(subscription), 100);
 	}
@@ -62,7 +62,7 @@ public class EventServiceTests {
 		final AddShoppingListItemEvent expectedEvent1 = createEvent(1);
 		final AddShoppingListItemEvent expectedEvent2 = createEvent(1);
 		eventStore.write(expectedEvent1);
-		eventService.register(subscription, EventQuery2.select(AddShoppingListItemEvent.class).where("ShoppingListId").is(1L));
+		eventService.register(subscription, EventQuery.select(AddShoppingListItemEvent.class).where("ShoppingListId").is(1L));
 		eventStore.write(expectedEvent2);
 
 		assertEqualsEventually(expectedEvent1, getNextReceivedEvent(subscription), 100);
@@ -77,7 +77,7 @@ public class EventServiceTests {
 		final AddShoppingListItemEvent unExpectedEvent = createEvent(2);
 		final AddShoppingListItemEvent expectedEvent2 = createEvent(1);
 		eventStore.write(expectedEvent1);
-		eventService.register(subscription, EventQuery2.select(AddShoppingListItemEvent.class).where("ShoppingListId").is(1L));
+		eventService.register(subscription, EventQuery.select(AddShoppingListItemEvent.class).where("ShoppingListId").is(1L));
 		eventStore.write(unExpectedEvent);
 		eventStore.write(expectedEvent2);
 
@@ -93,7 +93,7 @@ public class EventServiceTests {
 		final AddShoppingListItemEvent unExpectedEvent = createEvent(3);
 		final AddShoppingListItemEvent expectedEvent2 = createEvent(1);
 		eventStore.write(expectedEvent1);
-		eventService.register(subscription, EventQuery2.select(AddShoppingListItemEvent.class).where("ShoppingListId").in(1L, 2L));
+		eventService.register(subscription, EventQuery.select(AddShoppingListItemEvent.class).where("ShoppingListId").in(1L, 2L));
 		eventStore.write(unExpectedEvent);
 		eventStore.write(expectedEvent2);
 
